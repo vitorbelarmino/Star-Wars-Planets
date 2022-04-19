@@ -13,8 +13,8 @@ function ContextProvider({ children }) {
     getPlanets();
   }, []);
   return (
-    <context.Provider value={ data }>
-      { children}
+    <context.Provider value={ { data, setData } }>
+      {children}
     </context.Provider>
   );
 }
