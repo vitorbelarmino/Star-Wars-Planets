@@ -8,6 +8,9 @@ function ContextProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [name, setName] = useState('');
   const [filters, setfilters] = useState([]);
+  const [column, setColumn] = useState(['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
+  const [comparison, setComparison] = useState(['maior que', 'menor que', 'igual a']);
   const [filterByNumericValue, setfilterByNumericValue] = useState({
     column: 'population', comparison: 'maior que', value: 0 });
 
@@ -61,6 +64,10 @@ function ContextProvider({ children }) {
     filterNumeric,
     filters,
     setfilters,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
   };
 
   return (

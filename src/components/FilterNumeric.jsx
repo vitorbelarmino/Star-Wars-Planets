@@ -4,11 +4,8 @@ import context from '../Context/context';
 function FilterNumeric() {
   const {
     filterByNumericValue,
-    setfilterByNumericValue, setfilters } = useContext(context);
-
-  const opts = ['population',
-    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
-  const operators = ['maior que', 'menor que', 'igual a'];
+    setfilterByNumericValue,
+    setfilters, column, setColumn, comparison, setComparison } = useContext(context);
 
   function handleChange({ target }) {
     const { name, value } = target;
@@ -17,6 +14,12 @@ function FilterNumeric() {
 
   function creatFilters() {
     setfilters((preveState) => [...preveState, filterByNumericValue]);
+    const filterColumn = column.filter((e) => e !== filterByNumericValue.column);
+    setColumn(filterColumn);
+    const filterComparison = comparison
+      .filter((e) => e !== filterByNumericValue.comparison);
+    console.log(filterComparison);
+    setComparison(filterComparison);
   }
 
   return (
@@ -28,7 +31,7 @@ function FilterNumeric() {
           data-testid="column-filter"
           onChange={ handleChange }
         >
-          {opts.map((opt, key) => (
+          {column.map((opt, key) => (
             <option
               name={ opt }
               key={ key }
@@ -48,7 +51,7 @@ function FilterNumeric() {
           data-testid="comparison-filter"
           onChange={ handleChange }
         >
-          {operators.map((operator, key) => (
+          {comparison.map((operator, key) => (
             <option
               name={ operator }
               key={ key }
