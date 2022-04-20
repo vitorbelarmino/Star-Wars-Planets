@@ -1,19 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import context from '../Context/context';
 
 function Table() {
-  const { data } = useContext(context);
-  const [planets, setPlanets] = useState('');
-  const [name, setName] = useState('');
-  useEffect(() => {
-    setPlanets(data.results);
-  }, [data]);
-
-  function handleChange({ target }) {
-    setName(target.value);
-    const planetsFilter = data.results.filter((e) => e.name.includes(target.value));
-    setPlanets(planetsFilter);
-  }
+  const { name, planets, FilterByName, filters } = useContext(context);
 
   return (
     <>
@@ -21,10 +10,14 @@ function Table() {
         <input
           type="text"
           data-testid="name-filter"
-          onChange={ handleChange }
+          onChange={ FilterByName }
           value={ name }
         />
       </label>
+      <div>
+        {filters.map((filter, key) => (
+          <p key={ key }>{`${filter.column}${filter.comparison}${filter.value}`}</p>))}
+      </div>
       <table>
         <thead>
           <tr>
@@ -44,7 +37,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets && planets.map((planet) => (
+          {planets?.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{ planet.rotation_period }</td>
