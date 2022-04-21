@@ -4,24 +4,23 @@ import context from './context';
 import fectchPlanets from '../server';
 
 function ContextProvider({ children }) {
+  const inicialColumn = ['population',
+    'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+  const inicialComparison = ['maior que', 'menor que', 'igual a'];
   const [data, setData] = useState([]);
   const [planets, setPlanets] = useState([]);
   const [name, setName] = useState('');
   const [filters, setfilters] = useState([]);
-  const [column, setColumn] = useState(['population',
-    'orbital_period', 'diameter', 'rotation_period', 'surface_water']);
-  const [comparison, setComparison] = useState(['maior que', 'menor que', 'igual a']);
+  const [column, setColumn] = useState(inicialColumn);
+  const [comparison, setComparison] = useState(inicialComparison);
   const [filterByNumericValue, setfilterByNumericValue] = useState({
-    column: 'population', comparison: 'maior que', value: 0 });
+    column: column[0], comparison: comparison[0], value: 0 });
 
   const getPlanets = async () => {
     const planetas = await fectchPlanets();
     setData(planetas);
+    setPlanets(planetas.results);
   };
-
-  useEffect(() => {
-    setPlanets(data.results);
-  }, [data]);
 
   useEffect(() => {
     getPlanets();
@@ -34,25 +33,61 @@ function ContextProvider({ children }) {
   }
 
   function filterNumeric() {
+    console.log('entrou');
+    if (!data.results) return;
+    let resetPlanets = [...data.results];
+    setPlanets(data.results);
+    console.log('a');
     filters.forEach((filtro) => {
       if (filtro.comparison === 'maior que') {
-        const Planetsfilter = planets
-          .filter((e) => Number(filtro.value) < Number(e[filtro.column]));
+        console.log(resetPlanets);
+        const Planetsfilter = resetPlanets
+          .filter((e) => {
+            console.log(filtro.comparison, 'maior que');
+            return Number(filtro.value) < Number(e[filtro.column]);
+          });
+        console.log(Planetsfilter);
+        resetPlanets = Planetsfilter;
+        
         setPlanets(Planetsfilter);
       } else if (filtro.comparison === 'menor que') {
-        const Planetsfilter = planets
-          .filter((e) => Number(filtro.value) > Number(e[filtro.column]));
+        console.log(resetPlanets);
+        const Planetsfilter = resetPlanets
+          .filter((e) => {
+            console.log(filtro.comparison, 'menor que');
+            return Number(filtro.value) > Number(e[filtro.column])});
+        console.log(Planetsfilter);
         setPlanets(Planetsfilter);
+        resetPlanets = Planetsfilter;
       } else {
-        const Planetsfilter = planets
-          .filter((e) => Number(filtro.value) === Number(e[filtro.column]));
+        setPlanets(data.results);
+        const Planetsfilter = resetPlanets
+          .filter((e) => {
+            console.log(filtro.comparison, e);
+            return Number(filtro.value) === Number(e[filtro.column])});
+        console.log(Planetsfilter);
+        resetPlanets = Planetsfilter;
         setPlanets(Planetsfilter);
       }
     });
   }
+  function revomeFilter(filtername) {
+    if (filtername === 'limpaFiltro') {
+      setfilters([]);
+    } else {
+      const filtersRest = filters.filter((e) => e.column !== filtername.column);
+      setColumn([...column, filtername.column]);
+      setComparison([...comparison, filtername.comparison]);
+      setfilters(filtersRest);
+    }
+  }
+  function inicialFilter() {
+    setfilterByNumericValue({ column: column[0], comparison: comparison[0], value: 0 });
+  }
 
   useEffect(() => {
     filterNumeric();
+    inicialFilter();
   }, [filters]);
 
   const contextValue = {
@@ -68,6 +103,7 @@ function ContextProvider({ children }) {
     setColumn,
     comparison,
     setComparison,
+    revomeFilter,
   };
 
   return (

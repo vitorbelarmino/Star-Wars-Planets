@@ -9,6 +9,7 @@ function FilterNumeric() {
 
   function handleChange({ target }) {
     const { name, value } = target;
+    console.log(name, value);
     setfilterByNumericValue({ ...filterByNumericValue, [name]: value });
   }
 
@@ -18,7 +19,6 @@ function FilterNumeric() {
     setColumn(filterColumn);
     const filterComparison = comparison
       .filter((e) => e !== filterByNumericValue.comparison);
-    console.log(filterComparison);
     setComparison(filterComparison);
   }
 

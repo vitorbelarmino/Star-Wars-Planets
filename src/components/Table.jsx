@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import context from '../Context/context';
 
 function Table() {
-  const { name, planets, FilterByName, filters } = useContext(context);
+  const { name, planets, FilterByName, filters, revomeFilter } = useContext(context);
 
   return (
     <>
@@ -16,7 +16,16 @@ function Table() {
       </label>
       <div>
         {filters.map((filter, key) => (
-          <p key={ key }>{`${filter.column}${filter.comparison}${filter.value}`}</p>))}
+          <p key={ key } name={ filter.column } data-testid="filter">
+            {`${filter.column} ${filter.comparison} ${filter.value}`}
+            <button type="button" onClick={ () => revomeFilter(filter) }>
+              X
+            </button>
+
+          </p>
+
+        ))}
+        <button type="button" data-testid="button-remove-filters" onClick={ () => revomeFilter('limpaFiltro') }>remove filtros</button>
       </div>
       <table>
         <thead>
