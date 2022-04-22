@@ -9,7 +9,6 @@ function FilterNumeric() {
 
   function handleChange({ target }) {
     const { name, value } = target;
-    console.log(name, value);
     setfilterByNumericValue({ ...filterByNumericValue, [name]: value });
   }
 

@@ -25,7 +25,13 @@ function Table() {
           </p>
 
         ))}
-        <button type="button" data-testid="button-remove-filters" onClick={ () => revomeFilter('limpaFiltro') }>remove filtros</button>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ () => revomeFilter('limpaFiltro') }
+        >
+          Remove filtros
+        </button>
       </div>
       <table>
         <thead>

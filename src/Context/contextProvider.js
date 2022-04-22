@@ -33,41 +33,23 @@ function ContextProvider({ children }) {
   }
 
   function filterNumeric() {
-    console.log('entrou');
     if (!data.results) return;
     let resetPlanets = [...data.results];
     setPlanets(data.results);
-    console.log('a');
     filters.forEach((filtro) => {
       if (filtro.comparison === 'maior que') {
-        console.log(resetPlanets);
-        const Planetsfilter = resetPlanets
-          .filter((e) => {
-            console.log(filtro.comparison, 'maior que');
-            return Number(filtro.value) < Number(e[filtro.column]);
-          });
-        console.log(Planetsfilter);
-        resetPlanets = Planetsfilter;
-        
-        setPlanets(Planetsfilter);
+        resetPlanets = resetPlanets
+          .filter((e) => Number(filtro.value) < Number(e[filtro.column]));
+        setPlanets(resetPlanets);
       } else if (filtro.comparison === 'menor que') {
-        console.log(resetPlanets);
-        const Planetsfilter = resetPlanets
-          .filter((e) => {
-            console.log(filtro.comparison, 'menor que');
-            return Number(filtro.value) > Number(e[filtro.column])});
-        console.log(Planetsfilter);
-        setPlanets(Planetsfilter);
-        resetPlanets = Planetsfilter;
+        resetPlanets = resetPlanets
+          .filter((e) => Number(filtro.value) > Number(e[filtro.column]));
+        setPlanets(resetPlanets);
       } else {
         setPlanets(data.results);
-        const Planetsfilter = resetPlanets
-          .filter((e) => {
-            console.log(filtro.comparison, e);
-            return Number(filtro.value) === Number(e[filtro.column])});
-        console.log(Planetsfilter);
-        resetPlanets = Planetsfilter;
-        setPlanets(Planetsfilter);
+        resetPlanets = resetPlanets
+          .filter((e) => Number(filtro.value) === Number(e[filtro.column]));
+        setPlanets(resetPlanets);
       }
     });
   }
