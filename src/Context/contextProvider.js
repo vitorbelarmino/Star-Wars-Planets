@@ -13,13 +13,14 @@ function ContextProvider({ children }) {
   const [filters, setfilters] = useState([]);
   const [column, setColumn] = useState(inicialColumn);
   const [comparison, setComparison] = useState(inicialComparison);
-  const [filterByNumericValue, setfilterByNumericValue] = useState({
-    column: column[0], comparison: comparison[0], value: 0 });
+  const inicialFilterArray = { column: column[0], comparison: comparison[0], value: 0 };
+  const [filterByNumericValue, setfilterByNumericValue] = useState(inicialFilterArray);
+  const [filterSort, setFilterSort] = useState({ order: 'population', sort: 'ASC' });
 
   const getPlanets = async () => {
     const planetas = await fectchPlanets();
     setData(planetas);
-    setPlanets(planetas.results);
+    setPlanets(planetas.results.sort((a, b) => a.name.localeCompare(b.name)));
   };
 
   useEffect(() => {
@@ -75,6 +76,7 @@ function ContextProvider({ children }) {
   const contextValue = {
     name,
     planets,
+    setPlanets,
     FilterByName,
     filterByNumericValue,
     setfilterByNumericValue,
@@ -86,6 +88,8 @@ function ContextProvider({ children }) {
     comparison,
     setComparison,
     revomeFilter,
+    filterSort,
+    setFilterSort,
   };
 
   return (
