@@ -7,6 +7,7 @@ function Table() {
   return (
     <>
       <label htmlFor="name">
+        Name
         <input
           type="text"
           data-testid="name-filter"

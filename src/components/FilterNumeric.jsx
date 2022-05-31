@@ -22,46 +22,49 @@ function FilterNumeric() {
   }
 
   return (
-    <section className="section-filter">
-      <label htmlFor="column">
-        Coluna:
-        <select
-          name="column"
-          data-testid="column-filter"
-          onChange={ handleChange }
-        >
-          {column.map((opt, key) => (
-            <option
-              name={ opt }
-              key={ key }
-              value={ opt }
-            >
-              {opt}
+    <section className="section-filters">
+      <div className="filter">
+        <div className="filter-numeric" />
+        <label htmlFor="column">
+          Coluna:
+          <select
+            name="column"
+            data-testid="column-filter"
+            onChange={ handleChange }
+          >
+            {column.map((opt, key) => (
+              <option
+                name={ opt }
+                key={ key }
+                value={ opt }
+              >
+                {opt}
 
-            </option>
-          ))}
-        </select>
-      </label>
+              </option>
+            ))}
+          </select>
+        </label>
 
-      <label htmlFor="operators">
-        Operador:
-        <select
-          name="comparison"
-          data-testid="comparison-filter"
-          onChange={ handleChange }
-        >
-          {comparison.map((operator, key) => (
-            <option
-              name={ operator }
-              key={ key }
-              value={ operator }
-            >
-              {operator}
+        <label htmlFor="operators">
+          Operador:
+          <select
+            name="comparison"
+            data-testid="comparison-filter"
+            onChange={ handleChange }
+          >
+            {comparison.map((operator, key) => (
+              <option
+                name={ operator }
+                key={ key }
+                value={ operator }
+              >
+                {operator}
 
-            </option>
-          ))}
-        </select>
+              </option>
+            ))}
+          </select>
 
+        </label>
         <label htmlFor="numberFilter">
           <input
             type="number"
@@ -70,13 +73,12 @@ function FilterNumeric() {
             onChange={ handleChange }
             value={ filterByNumericValue.value }
           />
+
+          <button type="button" data-testid="button-filter" onClick={ creatFilters }>
+            Filter
+          </button>
         </label>
-      </label>
-
-      <button type="button" data-testid="button-filter" onClick={ creatFilters }>
-        Filter
-      </button>
-
+      </div>
     </section>
   );
 }

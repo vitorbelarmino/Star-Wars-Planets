@@ -32,42 +32,45 @@ function FilterOrder() {
   }
 
   return (
-    <section>
-      <label htmlFor="column-order">
-        <select data-testid="column-sort" name="order" onClick={ handleChange }>
-          {selectOrder.map((e, index) => (
-            <option value={ e } key={ index }>{e}</option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="ascendente">
-        Ascendente:
-        <input
-          data-testid="column-sort-input-asc"
-          type="radio"
-          name="sort"
-          value="ASC"
-          onClick={ handleChange }
-        />
-      </label>
-      <label htmlFor="descendente">
-        Descendente:
-        <input
-          data-testid="column-sort-input-desc"
-          type="radio"
-          name="sort"
-          value="DESC"
-          onClick={ handleChange }
-        />
-      </label>
-      <button
-        data-testid="column-sort-button"
-        type="button"
-        onClick={ putOrder }
-      >
-        Ordenar
+    <section className="section-filters">
+      <div className="filter">
 
-      </button>
+        <label htmlFor="column-order">
+          <select data-testid="column-sort" name="order" onClick={ handleChange }>
+            {selectOrder.map((e, index) => (
+              <option value={ e } key={ index }>{e}</option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="ascendente">
+          Ascendente:
+          <input
+            data-testid="column-sort-input-asc"
+            type="radio"
+            name="sort"
+            value="ASC"
+            onClick={ handleChange }
+          />
+        </label>
+        <label htmlFor="descendente">
+          Descendente:
+          <input
+            data-testid="column-sort-input-desc"
+            type="radio"
+            name="sort"
+            value="DESC"
+            onClick={ handleChange }
+          />
+        </label>
+        <button
+          data-testid="column-sort-button"
+          type="button"
+          onClick={ putOrder }
+        >
+          Ordenar
+
+        </button>
+      </div>
     </section>
 
   );
